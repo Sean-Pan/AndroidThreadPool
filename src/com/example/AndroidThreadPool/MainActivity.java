@@ -14,6 +14,8 @@ public class MainActivity extends Activity implements View.OnClickListener {
     /**
      * Called when the activity is first created.
      */
+    CustomThreadPoolExecutor executor = null;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,11 +33,11 @@ public class MainActivity extends Activity implements View.OnClickListener {
                 super.addFirst(runnable);
             }
         };
-        CustomThreadPoolExecutor executor = new CustomThreadPoolExecutor(3,3,10, TimeUnit.SECONDS,bQueue);
-        executor.setKeepAliveTime(20, TimeUnit.SECONDS);
+       executor = new CustomThreadPoolExecutor(3,3,10, TimeUnit.SECONDS,bQueue);
         executor.execute(new TheTask("task1"));
         executor.execute(new TheTask("task2"));
         executor.execute(new TheTask("task3"));
         executor.execute(new TheTask("task4"));
+        executor.shutdown();
     }
 }
